@@ -1,0 +1,11 @@
+{
+  "name": "Websocket-Chat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:WiesiaBryzik/Websocket-Chat.git",
+  "author": "Wiesława Bryzik <wieslawa.bryzik@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js"
+  }
+}
