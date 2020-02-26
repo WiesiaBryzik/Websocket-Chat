@@ -28,6 +28,9 @@ io.on('connection', (socket) => {
     users.push(newUser);
     console.log('user:', user);
     console.log('users:', users);
+    const loginMessage = { author: 'Chat Box', content: '<i>' + newUser.name + ' has join the conversation!</i>'}
+    messages.push(loginMessage);
+    socket.broadcast.emit('message', loginMessage);
   });
   socket.on('message', (message) => {
     console.log('Oh, I\'ve got something from ' + socket.id);
@@ -37,17 +40,19 @@ io.on('connection', (socket) => {
   });
   socket.on('disconnect', () => {
     console.log('Oh, socket ' + socket.id + ' has left');
-
+  
     for (let escapeUser of users) {
-      console.log('jestem w pętli');
+      if (escapeUser.uid === socket.id) {
       
-      if (escapeUser.id == socket.id) {
-      console.log('jestem w if');
+      const exitMessage = { author: 'Chat Box', content: '<i>' + escapeUser.name + ' has left the conversation... :(!</i>'}
+      messages.push(exitMessage);
+      socket.broadcast.emit('message', exitMessage);
 
-        users.splice(escapeUser.id, users.indexOf(escapeUser));
-        console.log(users);
-      }
+        users.splice(users.indexOf(escapeUser), 1);
+        }
     }
+
+  console.log('Active users in chat:', users);
 
   });
   console.log('I\'ve added a listener on message event \n');
